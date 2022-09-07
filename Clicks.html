@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!--Importing the external CSS.-->
+<head>
+
+<link rel="stylesheet" type="text/css" href="../Assets/styles.css">
+
+</head>
+
+<center>
+
+<div id="wrapper">
+<!--The 2 subheadings.-->
+<h1>Traffic Lights:</h1>
+
+<!--Default traffic light image is presented first along with the default message.-->
+<img id="image" src="../Assets/blank traffic light.jpeg">
+<h1 id="message" style>The traffic light is not on! Click Below:</h1>
+
+<!--Buttons that call functions that manage changing and resetting the lights.-->
+<button type="button" onclick="changeLights()"
+button style="height:150px;width:300px;font-size:40px" class="start">Change Lights</button>
+
+<button type="button" id="resetbutton" onclick="resetLights()"
+button style="height:150px;width:300px;font-size:40px" class="restart">Reset Lights</button>
+</div>
+
+<script>
+
+//Disabling the Reset Lights button at first.
+document.getElementById("resetbutton").disabled = true;
+
+//Array containing different assets is created.
+var lights=["../Assets/red light.jpeg", 
+	    "../Assets/red and amber light.jpeg",
+   	    "../Assets/green light.jpeg", 
+            "../Assets/amber light.jpeg"];
+
+//The Position variable is set to -1 to take 0-based indexing into account.
+var position=-1;
+
+//Functions:
+
+//Function managing the changing of the lights.
+function changeLights() 
+{
+
+    //The Reset Lights Button is enabled for use.
+    document.getElementById("resetbutton").disabled = false;
+
+    //Each time this function runs, the value of the position is increased by 1.
+    position++;
+    
+    //A new message appropriate for each light is displayed.
+    if ((position==0) || (position==4)) {
+        document.getElementById("message").innerHTML="STOP!";
+	document.getElementById("message").style.color="#DE4C38";}
+
+    else if (position==1) {
+        document.getElementById("message").innerHTML="GET READY!";
+	document.getElementById("message").style.color="#887403";}
+
+    else if (position==2) {
+        document.getElementById("message").innerHTML="GO!";
+	document.getElementById("message").style.color="#1C8A03";}
+
+    else if (position==3) {
+        document.getElementById("message").innerHTML="STOP IF IT IS SAFE!";
+	document.getElementById("message").style.color="#887A16";}
+
+    /*When the position is is equal to the amount of elements in the lights array, the position is set to 
+    equal 0 so the can continue to cycle.*/
+    if (position==lights.length) 
+        position=0;
+    
+    //The image element is set to the new position value which represents an element in the list.
+    document.getElementById("image").src=lights[position];
+
+}
+
+//Function managing the traffic light being reset.
+function resetLights() 
+{
+
+    //The Reset Lights button is disabled.
+    document.getElementById("resetbutton").disabled = true;
+
+    /*The image element is set to the default traffic light image and the 
+    message element is set to a new message.*/
+    document.getElementById("image").src="../Assets/blank traffic light.jpeg";
+    document.getElementById("message").innerHTML="Click to restart the lights!";
+    document.getElementById("message").style.color="#000000";
+    position=-1;
+
+}
+
+</script>
+
+</center>
+
+</body>
+</html>
