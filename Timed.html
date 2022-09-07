@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!--Importing the external CSS.-->
+<head>
+
+<link rel="stylesheet" type="text/css" href="../Assets/styles.css">
+
+</head>
+
+<!--Defining internal CSS of the webpage buttons.-->
+<style>
+
+.start {vertical-align: top;}
+
+.restart {vertical-align: top;}
+
+</style>
+
+<center>
+
+<div id="wrapper">
+<!--The 2 subheadings.-->
+<h1>Traffic Lights (Timed):</h1>
+<h2>Task 4:</h2>
+
+<!--Default traffic light image is presented first along with the default message.-->
+<img id="image" src="../Assets/blank traffic light.jpeg">
+<h1 id="message" style>The traffic light is not on! Click Below:</h1>
+
+<!--Buttons that call functions that manage changing and resetting the lights.-->
+<button type="button" id="changebutton" onclick="changeLights()"
+button style="height:150px;width:400px;font-size:40px" class="start">Change Lights</button>
+
+<button type="button" id="resetbutton" onclick="resetLights()" 
+button style="height:150px;width:400px;font-size:40px" class="restart">Reset Lights</button>
+</div>
+
+<script>
+
+//Enabling the Change Lights button at first.
+document.getElementById("changebutton").disabled = false;
+
+//Disabling the Reset Lights button at first.
+document.getElementById("resetbutton").disabled = true;
+
+//Array containing different assets is created.
+var lights=["../Assets/red light.jpeg",
+	    "../Assets/red and amber light.jpeg",
+	    "../Assets/green light.jpeg",
+	    "../Assets/amber light.jpeg"];
+
+//Position is set to -1 to take 0-based indexing into account.
+var position=-1;
+
+//Functions:
+
+//Function managing the changing of the lights.
+function changeLights() 
+{
+
+    //Disabling the Change Lights button.
+    document.getElementById("changebutton").disabled=true;
+    document.getElementById("changebutton").innerHTML="Click Reset Lights to "+ "<br>start it again!";
+
+    //Disabling the Change Lights button.
+    document.getElementById("resetbutton").disabled = false;
+
+    //Each time this function runs, the value of the position variable is increased by 1.
+    position++;
+
+    //A new message appropriate for each light is displayed.
+    if ((position==0) || (position==4)) {
+        document.getElementById("message").innerHTML="STOP!";
+	document.getElementById("message").style.color="#DE4C38";}
+
+    else if (position==1) {
+        document.getElementById("message").innerHTML="GET READY!";
+	document.getElementById("message").style.color="#887403";}
+
+    else if (position==2) {
+        document.getElementById("message").innerHTML="GO!";
+	document.getElementById("message").style.color="#1C8A03";}
+
+    else if (position==3) {
+        document.getElementById("message").innerHTML="START COMING TO A STOP!";
+	document.getElementById("message").style.color="#887A16";}
+
+    /*When the position is is equal to the amount of elements in the lights array, the position is
+    set to equal 0 so the can continue to cycle.*/
+    if (position==lights.length) {
+        position=0;}
+    
+    //The image element is set to the new position value which represents an element in the list.
+    document.getElementById("image").src=lights[position];
+
+    /*A timer that delays this function being called by 2 seconds.
+    The timer variable is defined so that it can be altered later.*/
+    timer=setTimeout(changeLights, 2000);
+
+}
+
+//Function managing the traffic light being reset.
+function resetLights() 
+{
+
+    //Enabling the Change Lights button.
+    document.getElementById("changebutton").disabled = false;
+    document.getElementById("changebutton").innerHTML = "Change Lights";
+
+    //Disabling the Reset Lights button.
+    document.getElementById("resetbutton").disabled = true;
+
+    /*The image element is set to the default traffic light image and the message
+    element is set to a new message.*/
+    document.getElementById("image").src="../Assets/blank traffic light.jpeg";
+    document.getElementById("message").innerHTML="Click to restart the lights!";
+    document.getElementById("message").style.color="#000000";
+    position=-1;
+    
+    /*The timer variable is passed through this method to clear it so there are 
+    no more delays in the calling of the function.*/
+    clearTimeout(timer);
+    
+}
+  
+</script>
+
+</center>
+
+</body>
+</html>
